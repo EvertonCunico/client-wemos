@@ -12,11 +12,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Leituras {
 	
     
-         //private Integer id;
+     private Integer id;
 	 private String nome;
 	 private String sensor1;
 	 private String sensor2;
-         private String sensor3;
+     private String sensor3;
 	
         
 	@Override
@@ -24,7 +24,20 @@ public class Leituras {
 		return "Código [lixeira=" + getNome() + ", sensor1=" + sensor1 + ", sensor2=" + sensor2 + ", sensor3=" + sensor3 + "]";
 	}
 	
-        /**
+	
+    public Integer getId() {
+		return id;
+	}
+
+
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+
+
+		/**
      * @return the nome
      */
     public String getNome() {

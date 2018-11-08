@@ -41,19 +41,18 @@ public class LeiturasDAO extends ConnectionFactory {
 		leituras = new ArrayList<Leituras>();
 		try {
 			pstmt = conexao
-					.prepareStatement("SELECT * FROM lixeiras ORDER BY nome");
+					.prepareStatement("SELECT * FROM lixeiras ORDER BY id desc");
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
 				Leituras leitura = new Leituras();
-
-				
+				leitura.setId(rs.getInt("id"));
 				leitura.setNome(rs.getString("nome"));
-                                leitura.setSensor1(rs.getString("sensor1"));
-                                leitura.setSensor2(rs.getString("sensor2"));
-                                leitura.setSensor3(rs.getString("sensor3"));
-				
-                                leituras.add(leitura);
+				leitura.setSensor1(rs.getString("sensor1"));
+				leitura.setSensor2(rs.getString("sensor2"));
+				leitura.setSensor3(rs.getString("sensor3"));
+
+				leituras.add(leitura);
 			}
 
 		} catch (Exception e) {
@@ -74,7 +73,7 @@ public class LeiturasDAO extends ConnectionFactory {
 	 * @since 11/05/2016 11:48:45
 	 * @version 1.0
 	 */
-        
+
 	public Leituras getById(long id) {
 
 		Connection conexao = null;
@@ -90,15 +89,15 @@ public class LeiturasDAO extends ConnectionFactory {
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				leitura = new Leituras();
-				
+
 				leitura.setNome(rs.getString("nome"));
-                                leitura.setSensor1(rs.getString("sensor1"));
+				leitura.setSensor1(rs.getString("sensor1"));
 				leitura.setSensor1(rs.getString("sensor2"));
-                                leitura.setSensor1(rs.getString("sensor3"));
+				leitura.setSensor1(rs.getString("sensor3"));
 			}
 		} catch (Exception e) {
 			System.out
-					.println("Erro ao buscar leitura com ID=" + id + "\n" + e);
+			.println("Erro ao buscar leitura com ID=" + id + "\n" + e);
 			e.printStackTrace();
 		} finally {
 			fecharConexao(conexao, pstmt, rs);
@@ -107,7 +106,7 @@ public class LeiturasDAO extends ConnectionFactory {
 		return leitura;
 
 	}
-        
+
 	/**
 	 * Metodo responsavel por gravar cliente no banco de dados.
 	 * 
@@ -119,9 +118,9 @@ public class LeiturasDAO extends ConnectionFactory {
 	 */
 	public boolean insert(Leituras leitura) {
 		String nome = leitura.getNome();
-                String sensor1 = leitura.getSensor1();
-                String sensor2 = leitura.getSensor2();
-                String sensor3 = leitura.getSensor3();
+		String sensor1 = leitura.getSensor1();
+		String sensor2 = leitura.getSensor2();
+		String sensor3 = leitura.getSensor3();
 		boolean isGravado = false;
 		PreparedStatement pstmt = null;
 		Connection conexao = criarConexao();
@@ -130,9 +129,9 @@ public class LeiturasDAO extends ConnectionFactory {
 					.prepareStatement("insert into lixeiras(nome,sensor1,sensor2,sensor3)"
 							+ "values(?,?,?,?)");
 			pstmt.setString(1, nome);
-                        pstmt.setString(2, sensor1);
-                        pstmt.setString(3, sensor2);
-                        pstmt.setString(4, sensor3);
+			pstmt.setString(2, sensor1);
+			pstmt.setString(3, sensor2);
+			pstmt.setString(4, sensor3);
 			boolean execute = pstmt.execute();
 			isGravado = true;
 			System.out.println("Respota do insert: " + execute);
@@ -155,22 +154,22 @@ public class LeiturasDAO extends ConnectionFactory {
 	 * @since 15/05/2016 13:29:22
 	 * @version 1.0
 	 */
-        
+
 	public boolean update(Leituras leitura) {
 		//long id = leitura.getId();
 		String nome = leitura.getNome();
-                String leitura1 = leitura.getSensor1();
-                String leitura2 = leitura.getSensor2();
-                String leitura3 = leitura.getSensor3();
+		String leitura1 = leitura.getSensor1();
+		String leitura2 = leitura.getSensor2();
+		String leitura3 = leitura.getSensor3();
 		boolean isAtualizado = false;
 		PreparedStatement pstmt = null;
 		Connection conexao = criarConexao();
 		try {
 			pstmt = conexao.prepareStatement("UPDATE lixeiras SET,sensor1 = ?,sensor2 = ?,sensor3 WHERE nome = ?");
 			pstmt.setString(1, nome);
-                        pstmt.setString(2, leitura1);
+			pstmt.setString(2, leitura1);
 			pstmt.setString(3, leitura2);
-                        pstmt.setString(4, leitura3);
+			pstmt.setString(4, leitura3);
 			int execute = pstmt.executeUpdate();
 			isAtualizado = true;
 			System.out.println("Retorno update: " + execute);
@@ -185,7 +184,7 @@ public class LeiturasDAO extends ConnectionFactory {
 		return isAtualizado;
 
 	}
-        
+
 	/**
 	 * Metodo responsavel por deletar cliente na base de dados.
 	 * 
@@ -195,14 +194,14 @@ public class LeiturasDAO extends ConnectionFactory {
 	 * @since 15/05/2016 13:29:40
 	 * @version 1.0
 	 */
-        
-	public boolean delete(Leituras leitura) {
+
+	public boolean delete(Integer id) {
 		boolean isDeletado = false;
 		PreparedStatement pstmt = null;
 		Connection conexao = criarConexao();
 		try {
 			pstmt = conexao.prepareStatement("DELETE FROM lixeiras WHERE id = ?");
-			
+			pstmt.setInt(1, id);
 			boolean execute = pstmt.execute();
 			isDeletado = true;
 			System.out.println("Respota do delete: " + execute);
@@ -216,5 +215,5 @@ public class LeiturasDAO extends ConnectionFactory {
 		}
 		return isDeletado;
 	}
-        
+
 }

@@ -50,7 +50,7 @@ public class LeiturasResource {
 
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
-        @Path("/salvarLeituraJson")
+    @Path("/salvarLeituraJson")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response salvarLeituraJson(Leituras leitura) {
 		boolean isLeituraGravado = new LeituraController().gravarLeitura(leitura);
@@ -63,7 +63,6 @@ public class LeiturasResource {
 	}
 
 	@PUT
-	//@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response altualizarLeitura(Leituras leitura) {
 		boolean isLeituraAtualizado = new LeituraController().atualizarLeitura(leitura);
@@ -77,17 +76,17 @@ public class LeiturasResource {
 	}
 
 	@DELETE
-	//@Consumes(MediaType.APPLICATION_JSON)
+	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response deletarLeitura(Leituras leitura) {
+	public Response deletarLeitura(@PathParam("id") Integer id) {
 
-		boolean isLeituraDeletado = new LeituraController().deletarLeitura(leitura);
+		boolean isLeituraDeletado = new LeituraController().deletarLeitura(id);
 		if (isLeituraDeletado == true) {
-			System.out.println("Leitura " + leitura.getNome() + " deletado");
-			return Response.ok().entity(leitura).build();
+			System.out.println("Leitura " + id + " deletado");
+			return Response.ok().entity("Leitura " + id + " deletado").build();
 		} else {
-			System.out.println("Erro no servidor  ao deletar leitura: " + leitura.getNome());
-			return Response.status(500).entity("Erro no servidor  ao deletar leitura: " + leitura.getNome()).build();
+			System.out.println("Erro no servidor  ao deletar leitura: " + id);
+			return Response.status(500).entity("Erro no servidor  ao deletar leitura: " + id).build();
 		}
 	}
 

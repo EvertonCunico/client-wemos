@@ -55,8 +55,8 @@ public class LeituraController {
        
         //Chama o metodo delete na classe LeiturasDAO
 	 
-	public boolean deletarLeitura(Leituras leitura) {
-		System.out.println("Controller: deletarCliente "+leitura.getNome());
-		return LeiturasDAO.getInstance().delete(leitura);
+	public boolean deletarLeitura(Integer id) {
+		System.out.println("Controller: deletarCliente "+id);
+		return LeiturasDAO.getInstance().delete(id);
 	}
 }
